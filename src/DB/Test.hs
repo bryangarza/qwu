@@ -10,8 +10,8 @@ import qualified DB.Table.Account as A
 import qualified DB.Table.Relationship as R
 import DB.Manipulation
 
--- testUpdateCardFront :: C.Id_ -> IO ()
--- testUpdateCardFront = updateCardFront "updated"
+testUpdatePostBody :: P.Id_ -> IO ()
+testUpdatePostBody = updatePostBody "updated"
 
 -- testUpdateCardBack :: C.Id_ -> IO ()
 -- testUpdateCardBack = updateCardBack "updated"

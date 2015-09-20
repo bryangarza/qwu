@@ -7,7 +7,7 @@ module DB.Manipulation (
   , createAccount
   -- , deletePost
   -- , deleteAccount
-  -- , updatePostBody
+  , updatePostBody
   -- , updateAccountUsername
   -- , updateAccountEmail
   -- , updateAccountPassword
@@ -65,18 +65,18 @@ createPost Post {body} accountId =
     columns                = Post Nothing body' ts'
     select Post {Post.id_} = id_
 
--- updateCardField :: (Card.ColumnW -> Card.ColumnW) -> Card.Id_ -> IO ()
--- updateCardField update idToMatch =
---   Util.runWithConn3 runUpdate Card.table update' match
---   where
---     update' x@Card {Card.id_} = update (x { Card.id_ = Just id_ })
---     match Card {Card.id_} = id_ .== pgInt4 idToMatch
+updatePostField :: (Post.ColumnW -> Post.ColumnW) -> Post.Id_ -> IO ()
+updatePostField update idToMatch =
+  Util.runWithConn3 runUpdate Post.table update' match
+  where
+    update' x@Post {Post.id_} = update (x { Post.id_ = Just id_ })
+    match Post {Post.id_} = id_ .== pgInt4 idToMatch
 
--- updateCardFront :: Card.Front -> Card.Id_ -> IO ()
--- updateCardFront newFront = updateCardField update
---   where
---     newFront' = pgStrictText newFront
---     update x = x { front = newFront' }
+updatePostBody :: Post.Body -> Post.Id_ -> IO ()
+updatePostBody newBody = updatePostField update
+  where
+    newBody' = pgStrictText newBody
+    update x = x { body = newBody' }
 
 -- updateCardBack :: Card.Back -> Card.Id_ -> IO ()
 -- updateCardBack newBack = updateCardField update
