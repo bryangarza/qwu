@@ -35,12 +35,3 @@ runWithConn3 action x y z =
     conn <- pConnect
     action conn x y z
     close conn
-
-class MatchId table idToMatch row where
-  matchId :: table -> idToMatch -> row -> Column PGBool
-
-instance MatchId (Table (a1,a2,a3) (Column b1,b2,b3)) (Column b1) (Column b1,b2,b3) where
-  matchId _ idToMatch = \(id_,_,_) -> id_ .== idToMatch
-
-instance MatchId (Table (a1,a2,a3,a4) (Column b1,b2,b3,b4)) (Column b1) (Column b1,b2,b3,b4) where
-  matchId _ idToMatch = \(id_,_,_,_) -> id_ .== idToMatch
