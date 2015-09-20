@@ -1,0 +1,10 @@
+flags: {}
+packages:
+- '.'
+- location:
+    git: git@github.com:bryangarza/uuid-aeson.git
+    commit: 651ee914442e9a97693a2372c88576a4838e9df1
+  extra-dep: true
+extra-deps:
+- opaleye-0.4.1.0
+resolver: lts-3.5
