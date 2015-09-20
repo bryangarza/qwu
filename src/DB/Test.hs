@@ -22,14 +22,14 @@ testUpdatePostBody = updatePostBody "updated"
 -- testUpdateDeckDesc :: D.Id_ -> IO ()
 -- testUpdateDeckDesc = updateDeckDesc "updated"
 
--- testUpdateAccountUsername :: IO ()
--- testUpdateAccountUsername = updateAccountUsername "updated" U.nil
+testUpdateAccountUsername :: IO ()
+testUpdateAccountUsername = updateAccountUsername "updatedUsername" U.nil
 
--- testUpdateAccountEmail :: IO ()
--- testUpdateAccountEmail = updateAccountEmail "updated" U.nil
+testUpdateAccountEmail :: IO ()
+testUpdateAccountEmail = updateAccountEmail "updatedEmail" U.nil
 
--- testUpdateAccountPassword :: IO ()
--- testUpdateAccountPassword = updateAccountPassword "updated" U.nil
+testUpdateAccountPassword :: IO ()
+testUpdateAccountPassword = updateAccountPassword "updatedPassword" U.nil
 
 testCreatePost :: String -> IO ()
 testCreatePost = testWithAccount $ createPost (def :: P.Post)

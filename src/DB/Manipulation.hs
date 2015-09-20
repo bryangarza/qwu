@@ -6,11 +6,11 @@ module DB.Manipulation (
     createPost
   , createAccount
   -- , deletePost
-  -- , deleteAccount
+  , deleteAccount
   , updatePostBody
-  -- , updateAccountUsername
-  -- , updateAccountEmail
-  -- , updateAccountPassword
+  , updateAccountUsername
+  , updateAccountEmail
+  , updateAccountPassword
   ) where
 
 import DB.Connect
@@ -128,32 +128,32 @@ createAccount (Account accountId username email password) =
     columns hash = Account accountId' username' email' hash'
       where hash' = pgStrictText (decodeUtf8 hash)
 
--- updateAccountField :: (Account.ColumnR -> Account.ColumnW) -> Account.Id_ -> IO ()
--- updateAccountField update idToMatch =
---   Util.runWithConn3 runUpdate Account.table update match
---   where
---     match Account {Account.id_} = id_ .== pgUUID idToMatch
+updateAccountField :: (Account.ColumnR -> Account.ColumnW) -> Account.Id_ -> IO ()
+updateAccountField update idToMatch =
+  Util.runWithConn3 runUpdate Account.table update match
+  where
+    match Account {Account.id_} = id_ .== pgUUID idToMatch
 
--- updateAccountUsername :: Account.Username -> Account.Id_ -> IO ()
--- updateAccountUsername newUsername = updateAccountField update
---   where newUsername' = pgStrictText newUsername
---         update x = x { username = newUsername' }
+updateAccountUsername :: Account.Username -> Account.Id_ -> IO ()
+updateAccountUsername newUsername = updateAccountField update
+  where newUsername' = pgStrictText newUsername
+        update x = x { username = newUsername' }
 
--- updateAccountEmail :: Account.Email -> Account.Id_ -> IO ()
--- updateAccountEmail newEmail = updateAccountField update
---   where
---     newEmail' = pgStrictText newEmail
---     update x = x { email = newEmail' }
+updateAccountEmail :: Account.Email -> Account.Id_ -> IO ()
+updateAccountEmail newEmail = updateAccountField update
+  where
+    newEmail' = pgStrictText newEmail
+    update x = x { email = newEmail' }
 
--- updateAccountPassword :: Account.Password -> Account.Id_ -> IO ()
--- updateAccountPassword newPassword id_ =
---   do
---     hash <- Util.genPassword (encodeUtf8 newPassword)
---     updateAccountField (update hash) id_
---   where
---     update :: BS.ByteString -> Account.ColumnR -> Account.ColumnW
---     update hash x = x { password = hash' }
---       where hash' = pgStrictText (decodeUtf8 hash)
+updateAccountPassword :: Account.Password -> Account.Id_ -> IO ()
+updateAccountPassword newPassword id_ =
+  do
+    hash <- Util.genPassword (encodeUtf8 newPassword)
+    updateAccountField (update hash) id_
+  where
+    update :: BS.ByteString -> Account.ColumnR -> Account.ColumnW
+    update hash x = x { password = hash' }
+      where hash' = pgStrictText (decodeUtf8 hash)
 
 -- deleteCard :: Card.Id_ -> IO ()
 -- deleteCard idToMatch = Util.runWithConn runDelete Card.table match
@@ -165,7 +165,7 @@ createAccount (Account accountId username email password) =
 --   where
 --     match Deck {Deck.id_} = id_ .== pgInt4 idToMatch
 
--- deleteAccount :: Account.Id_ -> IO ()
--- deleteAccount idToMatch = Util.runWithConn runDelete Account.table match
---   where
---     match Account {Account.id_} = id_ .== pgUUID idToMatch
+deleteAccount :: Account.Id_ -> IO ()
+deleteAccount idToMatch = Util.runWithConn runDelete Account.table match
+  where
+    match Account {Account.id_} = id_ .== pgUUID idToMatch
