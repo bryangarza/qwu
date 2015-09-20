@@ -12,6 +12,6 @@ import Data.Profunctor.Product (p2)
 type AccountPostTableW = (Column PGInt4, Column PGUuid)
 type AccountPostTableR = (Column PGInt4, Column PGUuid)
 
-accountDeckTable :: Table AccountPostTableW AccountPostTableR
-accountDeckTable = Table "accountDeckTable" (p2 ( required "postId"
+accountPostTable :: Table AccountPostTableW AccountPostTableR
+accountPostTable = Table "accountPostTable" (p2 ( required "postId"
                                                 , required "accountId"))

@@ -1,7 +1,7 @@
 CREATE TABLE "postTable" (
        "postId" SERIAL    PRIMARY KEY,
        "body"   TEXT      NOT NULL,
-       "ts"     TIMESTAMP NOT NULL
+       "ts"     TIMESTAMPTZ NOT NULL
 );
 
 CREATE TABLE "accountTable" (

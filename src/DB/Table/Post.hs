@@ -17,7 +17,7 @@ import Opaleye ( Column
                , optional
                , PGInt4
                , PGText
-               , PGTimestamp )
+               , PGTimestamptz )
 import qualified Data.Time as Time
 
 type Id_   = Int
@@ -43,7 +43,7 @@ instance Default Post where
 --     (imported from Data.Time, but defined in time-1.5.0.1:Data.Time.Format.Parse):
 --     Deprecated: "use "parseTimeM True" instead"
       Just ts =
-        Time.parseTime Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970"
+        Time.parseTime Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe Time.UTCTime
 
 $(makeAdaptorAndInstance "pPost" ''Post')
 
@@ -51,8 +51,8 @@ $(makeAdaptorAndInstance "pPost" ''Post')
 -- someTable :: Table <writes>
 --                    <reads>
 
-type ColumnW = Post' (Maybe (Column PGInt4)) (Column PGText) (Column PGTimestamp)
-type ColumnR = Post'        (Column PGInt4)  (Column PGText) (Column PGTimestamp)
+type ColumnW = Post' (Maybe (Column PGInt4)) (Column PGText) (Column PGTimestamptz)
+type ColumnR = Post'        (Column PGInt4)  (Column PGText) (Column PGTimestamptz)
 
 table :: Table ColumnW ColumnR
 table = Table "postTable" (
