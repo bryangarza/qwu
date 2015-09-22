@@ -22,14 +22,14 @@ genUuid = U4.nextRandom
 genPassword :: BS.ByteString -> IO BS.ByteString
 genPassword x = PwS.makePassword x 18
 
-runWithConn :: (Connection -> t2 -> t3 -> IO Int64) -> (t2 -> t3 -> IO ())
+runWithConn :: (Connection -> t2 -> t3 -> IO Int64) -> t2 -> t3 -> IO ()
 runWithConn action x y =
   do
     conn <- pConnect
     action conn x y
     close conn
 
-runWithConn3 :: (Connection -> t2 -> t3 -> t4 -> IO Int64) -> (t2 -> t3 -> t4 -> IO ())
+runWithConn3 :: (Connection -> t2 -> t3 -> t4 -> IO Int64) -> t2 -> t3 -> t4 -> IO ()
 runWithConn3 action x y z =
   do
     conn <- pConnect

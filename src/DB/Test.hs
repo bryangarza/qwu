@@ -11,7 +11,7 @@ import qualified DB.Table.Relationship as R
 import DB.Manipulation
 
 testCreatePost :: IO ()
-testCreatePost = (createPost (def :: P.Post)) U.nil
+testCreatePost = createPost (def :: P.Post) U.nil
 
 testUpdatePostBody :: P.Id_ -> IO ()
 testUpdatePostBody = updatePostBody "updated"
