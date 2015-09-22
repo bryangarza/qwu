@@ -1,8 +1,12 @@
 * qwu (twitter clone in haskell)
-** TODO progress [1/3]
-*** DONE database
-*** TODO todo rest api
-*** TODO todo frontend
+** progress
+|----------+--------|
+| layer    | status |
+|----------+--------|
+| db       | ✔      |
+| rest api | ✗      |
+| frontend | ✗      |
+|----------+--------|
 
 ** important libraries
 - opaleye (postgres)
