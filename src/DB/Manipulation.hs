@@ -19,7 +19,7 @@ import DB.Table.Post     (Post, Post'(Post), body, ts)
 import DB.Table.Account  (Account, Account'(Account), username, email, password)
 import qualified DB.Table.Post         as Post
 import qualified DB.Table.Account      as Account
-import qualified DB.Table.Relationship as Rel
+-- import qualified DB.Table.Relationship as Rel
 
 import qualified Data.ByteString as BS
 import qualified Data.Text as T
@@ -33,24 +33,19 @@ import Opaleye.PGTypes (pgStrictText, pgInt4, pgUUID, pgUTCTime)
 import Opaleye.Column (Column)
 import Opaleye.Internal.Table (Table)
 
-addPostToAccount :: Connection -> [Post.Id_] -> U.UUID -> IO ()
-addPostToAccount conn [postId] accountId =
-  do
-    runInsert conn Rel.accountPostTable (pgInt4 postId, pgUUID accountId)
-    close conn
-
 createPost :: Post -> U.UUID -> IO ()
 createPost Post {body} accountId =
   do
     -- ts     <- Clock.getCurrentTime
     conn   <- pConnect
-    postId <- runInsertReturning conn Post.table columns select
-    addPostToAccount conn postId accountId
+    -- postId <- runInsertReturning conn Post.table columns select
+    Util.runWithConn runInsert Post.table columns
   where
     body'                  = pgStrictText body
-    Just ts               = Time.parseTime Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe Time.UTCTime
+    Just ts                = Time.parseTime Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe Time.UTCTime
     ts'                    = pgUTCTime ts
-    columns                = Post Nothing body' ts'
+    accountId'             = pgUUID accountId
+    columns                = Post Nothing body' ts' accountId'
     select Post {Post.id_} = id_
 
 updatePostField :: (Post.ColumnW -> Post.ColumnW) -> Post.Id_ -> IO ()

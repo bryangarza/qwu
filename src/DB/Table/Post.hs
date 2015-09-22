@@ -10,6 +10,8 @@ import Data.Aeson
 import Data.Default
 import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
 import Data.Text
+import Data.UUID as U
+import Data.UUID.Aeson
 import GHC.Generics
 import Opaleye ( Column
                , Table(Table)
@@ -17,25 +19,28 @@ import Opaleye ( Column
                , optional
                , PGInt4
                , PGText
-               , PGTimestamptz )
+               , PGTimestamptz
+               , PGUuid )
 import qualified Data.Time as Time
 
-type Id_   = Int
-type Body  = Text
-type Ts    = Time.UTCTime
+type Id_       = Int
+type Body      = Text
+type Ts        = Time.UTCTime
+type AccountId = UUID
 
-data Post' a b c = Post
-    { id_  :: a
-    , body :: b
-    , ts   :: c
+data Post' a b c d = Post
+    { id_       :: a
+    , body      :: b
+    , ts        :: c
+    , accountId :: d
     } deriving (Eq, Show, Generic)
 
-type Post = Post' Id_ Body Ts
+type Post = Post' Id_ Body Ts AccountId
 
 instance ToJSON Post
 
 instance Default Post where
-  def = Post 0 "a post body" ts
+  def = Post 0 "a post body" ts U.nil
     where
 -- TODO: fix
 -- src/DB/Table/Post.hs:41:9-22: Warning: …
@@ -51,11 +56,12 @@ $(makeAdaptorAndInstance "pPost" ''Post')
 -- someTable :: Table <writes>
 --                    <reads>
 
-type ColumnW = Post' (Maybe (Column PGInt4)) (Column PGText) (Column PGTimestamptz)
-type ColumnR = Post'        (Column PGInt4)  (Column PGText) (Column PGTimestamptz)
+type ColumnW = Post' (Maybe (Column PGInt4)) (Column PGText) (Column PGTimestamptz) (Column PGUuid)
+type ColumnR = Post'        (Column PGInt4)  (Column PGText) (Column PGTimestamptz) (Column PGUuid)
 
 table :: Table ColumnW ColumnR
 table = Table "postTable" (
-  pPost Post { id_   = optional "postId"
-             , body  = required "body"
-             , ts    = required "ts" })
+  pPost Post { id_       = optional "postId"
+             , body      = required "body"
+             , ts        = required "ts"
+             , accountId = required "accountId" })

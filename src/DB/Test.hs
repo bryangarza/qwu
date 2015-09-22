@@ -10,17 +10,11 @@ import qualified DB.Table.Account as A
 import qualified DB.Table.Relationship as R
 import DB.Manipulation
 
+testCreatePost :: IO ()
+testCreatePost = (createPost (def :: P.Post)) U.nil
+
 testUpdatePostBody :: P.Id_ -> IO ()
 testUpdatePostBody = updatePostBody "updated"
-
--- testUpdateCardBack :: C.Id_ -> IO ()
--- testUpdateCardBack = updateCardBack "updated"
-
--- testUpdateDeckTitle :: D.Id_ -> IO ()
--- testUpdateDeckTitle = updateDeckTitle "updated"
-
--- testUpdateDeckDesc :: D.Id_ -> IO ()
--- testUpdateDeckDesc = updateDeckDesc "updated"
 
 testUpdateAccountUsername :: IO ()
 testUpdateAccountUsername = updateAccountUsername "updatedUsername" U.nil
@@ -31,9 +25,6 @@ testUpdateAccountEmail = updateAccountEmail "updatedEmail" U.nil
 testUpdateAccountPassword :: IO ()
 testUpdateAccountPassword = updateAccountPassword "updatedPassword" U.nil
 
-testCreatePost :: String -> IO ()
-testCreatePost = testWithAccount $ createPost (def :: P.Post)
-
 testCreateAccount :: IO ()
 testCreateAccount = createAccount (def :: A.Account)
 
@@ -43,5 +34,5 @@ testWithAccount action accountIdStr =
     Just accountId -> action accountId
     Nothing        -> action U.nil
 
--- testDeleteAccount :: String -> IO ()
--- testDeleteAccount = testWithAccount deleteAccount
+testDeleteAccount :: IO ()
+testDeleteAccount = deleteAccount U.nil
