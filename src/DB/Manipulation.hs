@@ -36,16 +36,12 @@ import Opaleye.Internal.Table (Table)
 createPost :: Post -> U.UUID -> IO ()
 createPost Post {body} accountId =
   do
-    -- ts     <- Clock.getCurrentTime
-    conn   <- pConnect
-    -- postId <- runInsertReturning conn Post.table columns select
-    Util.runWithConn runInsert Post.table columns
+    timestamp <- Clock.getCurrentTime
+    Util.runWithConn runInsert Post.table (columns timestamp)
   where
     body'                  = pgStrictText body
-    Just ts                = Time.parseTime Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe Time.UTCTime
-    ts'                    = pgUTCTime ts
     accountId'             = pgUUID accountId
-    columns                = Post Nothing body' ts' accountId'
+    columns t              = Post Nothing body' (pgUTCTime t) accountId'
     select Post {Post.id_} = id_
 
 updatePostField :: (Post.ColumnW -> Post.ColumnW) -> Post.Id_ -> IO ()
