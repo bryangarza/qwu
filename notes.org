@@ -1,0 +1,28 @@
+#+title: Notes
+
+* Postgres (psql)
+- ~CREATE DATABASE dbname (OWNER name);~
+- ~\c(onnect) dbname~
+- ~\i some/script.sql~
+
+* Opaleye
+Type of ~runInsertReturning~ is:
+
+#+BEGIN_SRC haskell
+runInsertReturning :: Default QueryRunner returned haskells =>
+                      Connection ->
+                      Table columnsW columnsR ->
+                      columnsW ->
+                      (columnsR -> returned) ->
+                      IO [haskells]
+#+END_SRC
+
+You have to write out the type of ~IO [haskells]~ (whether that be ~Int~,
+~UUID~, whatever) so that the function can return a concrete type, otherwise it
+doesn't know what to return.
+
+~[haskells]~ is the type var for what is returning... ~deckId~ is an ~Int~, so
+therefore we have ~IO [Int]~ as the return type.
+
+~returned~ and ~haskells~ are constrained by the same typeclass, as they are
+representing the same exact 'thing' being returned.
