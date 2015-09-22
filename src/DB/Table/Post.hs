@@ -40,15 +40,10 @@ type Post = Post' Id_ Body Ts AccountId
 instance ToJSON Post
 
 instance Default Post where
-  def = Post 0 "a post body" ts U.nil
+  def = Post 0 "a post body" timestamp U.nil
     where
--- TODO: fix
--- src/DB/Table/Post.hs:41:9-22: Warning: …
---     In the use of ‘Time.parseTime’
---     (imported from Data.Time, but defined in time-1.5.0.1:Data.Time.Format.Parse):
---     Deprecated: "use "parseTimeM True" instead"
-      Just ts =
-        Time.parseTime Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe Time.UTCTime
+      Just timestamp =
+        Time.parseTimeM True Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe Time.UTCTime
 
 $(makeAdaptorAndInstance "pPost" ''Post')
 
