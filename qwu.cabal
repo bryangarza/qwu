@@ -3,7 +3,7 @@ version:             0.1.0.0
 synopsis:            Twitter clone
 description:         Please see README.md
 homepage:            http://github.com/bryangarza/qwu
-license:             BSD3
+license:             MIT
 license-file:        LICENSE
 author:              Bryan Garza
 maintainer:          brygarza@gmail.com
