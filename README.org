@@ -1,12 +1,16 @@
 * qwu (twitter clone in haskell)
 ** progress
-|----------+--------|
-| layer    | status |
-|----------+--------|
-| db       | ✔      |
-| rest api | ✗      |
-| frontend | ✗      |
-|----------+--------|
+|------------+--------|
+| layer      | status |
+|------------+--------|
+| db inserts | ✔      |
+| db deletes | ✔      |
+| db updates | ✔      |
+| db queries | ↻      |
+|------------+--------|
+| rest api   | ✗      |
+| frontend   | ✗      |
+|------------+--------|
 
 ** important libraries
 - opaleye (postgres)
