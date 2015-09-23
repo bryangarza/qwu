@@ -1,16 +1,21 @@
 * qwu (twitter clone in haskell)
+- because why not.
+- ripped some parts of the db code from an unpublished project.
+- dm me on twitter [[https://twitter.com/bryangarza][@bryangarza]]
+
+
 ** progress
-|------------+--------|
-| layer      | status |
-|------------+--------|
-| db inserts | ✔      |
-| db deletes | ✔      |
-| db updates | ✔      |
-| db queries | ↻      |
-|------------+--------|
-| rest api   | ✗      |
-| frontend   | ✗      |
-|------------+--------|
+|------------+-------------|
+| layer      | status      |
+|------------+-------------|
+| db inserts | ✔           |
+| db deletes | ✔           |
+| db updates | ✔           |
+| db queries | in progress |
+|------------+-------------|
+| rest api   | ✗           |
+| frontend   | ✗           |
+|------------+-------------|
 
 ** important libraries
 - opaleye (postgres)
