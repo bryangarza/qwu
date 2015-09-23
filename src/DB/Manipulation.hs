@@ -13,21 +13,18 @@ module DB.Manipulation (
   , updateAccountPassword
   ) where
 
-import DB.Connect
 import qualified DB.Util as Util
-import DB.Table.Post     (Post, Post'(Post), body, ts)
-import DB.Table.Account  (Account, Account'(Account), username, email, password)
 import qualified DB.Table.Post         as Post
 import qualified DB.Table.Account      as Account
--- import qualified DB.Table.Relationship as Rel
+import DB.Table.Post     (Post, Post'(Post), body, ts)
+import DB.Table.Account  (Account, Account'(Account), username, email, password)
 
 import qualified Data.ByteString as BS
 import qualified Data.Text as T
 import qualified Data.Time as Time
 import qualified Data.Time.Clock as Clock
-import Data.Text.Encoding (encodeUtf8, decodeUtf8)
 import qualified Data.UUID as U
-import Database.PostgreSQL.Simple (Connection, close)
+import Data.Text.Encoding (encodeUtf8, decodeUtf8)
 import Opaleye ((.==), runInsert, runDelete, runInsertReturning, runUpdate)
 import Opaleye.PGTypes (pgStrictText, pgInt4, pgUUID, pgUTCTime)
 import Opaleye.Column (Column)
