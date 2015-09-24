@@ -6,5 +6,8 @@ packages:
     commit: 651ee914442e9a97693a2372c88576a4838e9df1
   extra-dep: true
 extra-deps:
+- servant-0.4.4
+- servant-lucid-0.4.4
+- servant-server-0.4.4
 - opaleye-0.4.1.0
 resolver: lts-3.5

@@ -13,6 +13,14 @@ import Data.Text
 import Data.UUID as U
 import Data.UUID.Aeson
 import GHC.Generics
+import Lucid ( ToHtml
+             , toHtml
+             , toHtmlRaw
+             , table_
+             , tr_
+             , td_
+             , th_
+             )
 import Opaleye ( Column
                , Table(Table)
                , required
@@ -60,3 +68,28 @@ table = Table "postTable" (
              , body      = required "body"
              , ts        = required "ts"
              , accountId = required "accountId" })
+
+
+-- HTML serialization of a single person
+instance ToHtml Post where
+  toHtml post =
+    tr_ $ do
+      td_ (toHtml . show $ id_ post)
+      td_ (toHtml $ body post)
+      td_ (toHtml . show $ ts post)
+      td_ (toHtml . show $ accountId post)
+
+  toHtmlRaw = toHtml
+
+-- HTML serialization of a list of persons
+instance ToHtml [Post] where
+  toHtml posts = table_ $ do
+    tr_ $ do
+      th_ "id"
+      th_ "content"
+      th_ "timestamp"
+      th_ "account id"
+
+    foldMap toHtml posts
+
+  toHtmlRaw = toHtml

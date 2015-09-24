@@ -27,15 +27,23 @@ executable qwu
                      , base
                      , bytestring
                      , data-default
+                     , lucid
+                     , mtl
                      , opaleye
                      , postgresql-simple
                      , product-profunctors
                      , pwstore-fast
                      , qwu
+                     , servant
+                     , servant-lucid
+                     , servant-server
                      , text
                      , time
                      , uuid
                      , uuid-aeson
+                     , wai
+                     , wai-extra
+                     , warp
   default-language:    Haskell2010
 
 test-suite qwu-test
