@@ -8,6 +8,7 @@ import DB.Connect
 import DB.Table.Post as P
 
 import qualified Data.UUID as U
+
 import Control.Arrow (returnA, (<<<))
 import Data.Profunctor.Product.Default (Default)
 import Database.PostgreSQL.Simple (Connection)
@@ -19,7 +20,6 @@ import Opaleye ( Query
                , runQuery
                , showSqlForPostgres
                , Unpackspec )
-
 
 postQuery :: Query P.ColumnR
 postQuery = queryTable P.table
