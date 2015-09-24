@@ -5,11 +5,13 @@ module Server where
 
 import qualified DB.Query as Q
 import qualified DB.Table.Post as P
+import qualified HTML.Post as HP
 
 import Control.Monad.Trans (liftIO)
-import Network.Wai
-import Servant
+import Network.Wai (Application)
 import Servant.HTML.Lucid (HTML)
+
+import Servant
 
 type PostAPI = "posts" :> Get '[JSON, HTML] [P.Post]
 
