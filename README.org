@@ -1,10 +1,10 @@
 * qwu (twitter clone in haskell)
 - because why not.
 - ripped some parts of the db code from an unpublished project.
-- dm me on twitter [[https://twitter.com/bryangarza][@bryangarza]]
+- say hi [[https://twitter.com/bryangarza][@bryangarza]]
 
 
-** progress
+** status
 |------------+-------------|
 | layer      | status      |
 |------------+-------------|
@@ -13,14 +13,14 @@
 | db updates | ✔           |
 | db queries | in progress |
 |------------+-------------|
-| rest api   | ✗           |
-| frontend   | ✗           |
+| rest api   | in progress |
+| frontend   | in progress |
 |------------+-------------|
 
 ** important libraries
 - opaleye (postgres)
-- servant (server)
-- lucid (html edsml)
+- servant (api)
+- lucid (html edsl)
 - clay (css edsl)
 
 ** routes
