@@ -1,13 +1,8 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# OPTIONS_GHC -fno-warn-type-defaults #-}
-
--- | An example which should always compile and demonstrates \"real\"
--- code.
 
 module Html.Base where
 
 import Control.Monad
-import Data.Functor.Identity
 import Lucid
 
 demo :: Monad m => HtmlT m a -> HtmlT m a
