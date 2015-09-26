@@ -27,6 +27,7 @@ executable qwu
                      , base
                      , bytestring
                      , data-default
+                     , either
                      , lucid
                      , mtl
                      , opaleye

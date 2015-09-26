@@ -32,7 +32,7 @@
 | =/search/<terms>=   | search for posts           | get  | no    |
 | =/<user>/followers= | list a user's followers    | get  | no    |
 | =/<user>/following= | list who user is following | get  | no    |
-| =/qwu=              | new post                   | post | yes   |
+| =/newpost=          | new post                   | post | yes   |
 | =/del/<id>/=        | delete post by id          | post | yes   |
 | =/star/<id>=        | star a post by id          | post | yes   |
 | =/follow/<user>=    | follow a user              | post | yes   |
