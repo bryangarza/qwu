@@ -6,6 +6,7 @@
 
 module DB.Table.Post where
 
+import DB.Table.Account (AccountId)
 import qualified Data.Time as Time
 
 import Data.Aeson
@@ -27,7 +28,6 @@ import Opaleye ( Column
 type PostId    = Int
 type Body      = Text
 type Ts        = Time.UTCTime
-type AccountId = UUID
 
 data Post' a b c d = Post
     { postId    :: a
