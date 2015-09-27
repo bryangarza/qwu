@@ -4,10 +4,9 @@
 module Html.Post where
 
 import DB.Table.Post
-import DB.Table.Post as P
 import Html.Base
 
-import Data.Text(pack)
+import Data.Text (pack)
 import Lucid
 
 -- HTML serialization of a single post

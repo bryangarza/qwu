@@ -1,18 +1,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 module DB.Test where
 
+import DB.Manipulation
+import DB.Table.Account
+import DB.Table.Post
+
 import Data.Default
 import Data.Text
 import Data.UUID as U
 
-import qualified DB.Table.Post as P
-import qualified DB.Table.Account as A
-import DB.Manipulation
-
 testCreatePost :: IO ()
-testCreatePost = createPost (def :: P.Post) U.nil
+testCreatePost = createPost (def :: Post) U.nil
 
-testUpdatePostBody :: P.PostId -> IO ()
+testUpdatePostBody :: PostId -> IO ()
 testUpdatePostBody = updatePostBody "updated"
 
 testUpdateAccountUsername :: IO ()
@@ -25,7 +25,7 @@ testUpdateAccountPassword :: IO ()
 testUpdateAccountPassword = updateAccountPassword "updatedPassword" U.nil
 
 testCreateAccount :: IO ()
-testCreateAccount = createAccount (def :: A.Account)
+testCreateAccount = createAccount (def :: Account)
 
 testWithAccount :: (UUID -> IO ()) -> String -> IO ()
 testWithAccount action accountIdStr =

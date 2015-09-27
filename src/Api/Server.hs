@@ -3,16 +3,15 @@
 
 module Api.Server where
 
-import qualified DB.Query as Q
+import           DB.Query (runPostByAccountId)
 import qualified DB.Table.Post as P
-import qualified Html.Post as HP
+import           Html.Post
 
+import Control.Monad.Trans        (liftIO)
 import Control.Monad.Trans.Either (EitherT)
-import Control.Monad.Trans (liftIO)
-import Network.Wai (Application)
-import Servant.HTML.Lucid (HTML)
-
+import Network.Wai                (Application)
 import Servant
+import Servant.HTML.Lucid         (HTML)
 
 type MyApi = "posts" :> Get '[JSON, HTML] [P.Post]
         -- takes Body type as JSON, returns [Post]
@@ -26,9 +25,9 @@ server = posts
     :<|> newpost
   where
     posts :: EitherT ServantErr IO [P.Post]
-    posts = liftIO Q.runPostByAccountId
+    posts = liftIO runPostByAccountId
     newpost :: P.Body -> EitherT ServantErr IO [P.Post]
-    newpost x = liftIO Q.runPostByAccountId
+    newpost x = liftIO runPostByAccountId
 
 app :: Application
 app = serve myApi server

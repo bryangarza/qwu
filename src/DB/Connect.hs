@@ -1,9 +1,6 @@
-{-# LANGUAGE OverloadedStrings #-}
 module DB.Connect (pConnect) where
 
 import Database.PostgreSQL.Simple
-import Control.Monad
-import Control.Applicative
 
 myConnectInfo :: ConnectInfo
 myConnectInfo = ConnectInfo

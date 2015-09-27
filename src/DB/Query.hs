@@ -5,37 +5,39 @@
 module DB.Query where
 
 import DB.Connect
-import DB.Table.Post as P
+import DB.Table.Account (AccountId)
+import DB.Table.Post
 
 import qualified Data.UUID as U
-
-import Control.Arrow (returnA, (<<<))
+import Data.UUID
+import Control.Arrow                   (returnA)
 import Data.Profunctor.Product.Default (Default)
-import Database.PostgreSQL.Simple (Connection)
-import Opaleye.PGTypes (pgUUID)
-import Opaleye ( Query
-               , restrict
-               , (.==)
-               , queryTable
-               , runQuery
-               , showSqlForPostgres
-               , Unpackspec )
+import Database.PostgreSQL.Simple      (Connection)
+import Opaleye.PGTypes                 (pgUUID)
+import Opaleye
+  ( Query
+  , restrict
+  , (.==)
+  , queryTable
+  , runQuery
+  , showSqlForPostgres
+  , Unpackspec )
 
-postQuery :: Query P.ColumnR
-postQuery = queryTable P.table
+postQuery :: Query ColumnR
+postQuery = queryTable table
 
-postByAccountId :: U.UUID -> Query P.ColumnR
-postByAccountId id_ = proc () -> do
+postByAccountId :: AccountId -> Query ColumnR
+postByAccountId idToMatch = proc () -> do
   row@Post{accountId} <- postQuery -< ()
-  restrict -< accountId .== pgUUID id_
+  restrict -< accountId .== pgUUID idToMatch
   returnA -< row
 
-runPostByAccountId :: IO [P.Post]
+runPostByAccountId :: IO [Post]
 runPostByAccountId =
   do
     conn <- pConnect
     runPostByAccountId' conn (postByAccountId U.nil)
-      where runPostByAccountId' :: Connection -> Query P.ColumnR -> IO [P.Post]
+      where runPostByAccountId' :: Connection -> Query ColumnR -> IO [Post]
             runPostByAccountId' = runQuery
 
 printSql :: Default Unpackspec a a => Query a -> IO ()

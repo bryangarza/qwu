@@ -1,0 +1,9 @@
+* Style Guide
+
+** Imports
+Order of imports:
+- Internal
+- =base= / GHC libraries
+- External
+
+Prefer unqualified imports unless there is an overlap.

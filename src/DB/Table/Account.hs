@@ -6,19 +6,20 @@
 
 module DB.Table.Account where
 
+import GHC.Generics
 import Data.Aeson
 import Data.Default
 import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
 import Data.Text
 import Data.UUID as U
 import Data.UUID.Aeson
-import GHC.Generics
-import Opaleye ( Column
-               , Table(Table)
-               , required
-               , optional
-               , PGText
-               , PGUuid )
+import Opaleye
+  ( Column
+  , optional
+  , PGText
+  , PGUuid
+  , required
+  , Table(Table) )
 
 type AccountId = UUID
 type Username  = Text

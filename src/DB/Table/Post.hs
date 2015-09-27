@@ -7,27 +7,28 @@
 module DB.Table.Post where
 
 import DB.Table.Account (AccountId)
-import qualified Data.Time as Time
 
+import GHC.Generics
 import Data.Aeson
 import Data.Default
 import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
 import Data.Text
+import Data.Time (defaultTimeLocale, parseTimeM, UTCTime)
 import Data.UUID as U
 import Data.UUID.Aeson
-import GHC.Generics
-import Opaleye ( Column
-               , Table(Table)
-               , required
-               , optional
-               , PGInt4
-               , PGText
-               , PGTimestamptz
-               , PGUuid )
+import Opaleye
+  ( Column
+  , optional
+  , required
+  , PGInt4
+  , PGText
+  , PGTimestamptz
+  , PGUuid
+  , Table(Table) )
 
 type PostId    = Int
 type Body      = Text
-type Ts        = Time.UTCTime
+type Ts        = UTCTime
 
 data Post' a b c d = Post
     { postId    :: a
@@ -44,7 +45,7 @@ instance Default Post where
   def = Post 0 "a post body" timestamp U.nil
     where
       Just timestamp =
-        Time.parseTimeM True Time.defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe Time.UTCTime
+        parseTimeM True defaultTimeLocale "%c" "Thu Jan  1 00:00:10 UTC 1970" :: Maybe UTCTime
 
 $(makeAdaptorAndInstance "pPost" ''Post')
 
