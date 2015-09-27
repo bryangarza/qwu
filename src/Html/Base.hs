@@ -5,8 +5,8 @@ module Html.Base where
 import Control.Monad
 import Lucid
 
-demo :: Monad m => HtmlT m a -> HtmlT m a
-demo body =
+baseHtml :: Monad m => HtmlT m a -> HtmlT m a
+baseHtml body =
   doctypehtml_
     (do head_ (do meta_ [charset_ "utf-8"]
                   meta_ [name_ "viewport"

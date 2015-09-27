@@ -22,7 +22,7 @@ instance ToHtml Post where
 
 -- HTML serialization of a list of posts
 instance ToHtml [Post] where
-  toHtml posts = demo . table_ $ do
+  toHtml posts = baseHtml . table_ $ do
     tr_ $ do
       th_ "id"
       th_ "content"
