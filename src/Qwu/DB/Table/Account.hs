@@ -4,7 +4,7 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE TemplateHaskell       #-}
 
-module DB.Table.Account where
+module Qwu.DB.Table.Account where
 
 import GHC.Generics
 import Data.Aeson

@@ -2,11 +2,11 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE NamedFieldPuns   #-}
 
-module DB.Query where
+module Qwu.DB.Query where
 
-import DB.Connect
-import DB.Table.Account (AccountId)
-import DB.Table.Post
+import Qwu.DB.Connect
+import Qwu.DB.Table.Account (AccountId)
+import Qwu.DB.Table.Post
 
 import qualified Data.UUID as U
 import Data.UUID

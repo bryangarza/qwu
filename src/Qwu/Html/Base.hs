@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Html.Base where
+module Qwu.Html.Base where
 
 import Control.Monad
 import Lucid

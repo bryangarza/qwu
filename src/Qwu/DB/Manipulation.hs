@@ -1,6 +1,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
-module DB.Manipulation (
+module Qwu.DB.Manipulation (
     createPost
   , createAccount
   , deletePost
@@ -11,11 +11,11 @@ module DB.Manipulation (
   , updateAccountPassword
   ) where
 
-import           DB.Table.Post
-import qualified DB.Table.Post      as Post
-import           DB.Table.Account
-import qualified DB.Table.Account   as Account
-import           DB.Util
+import           Qwu.DB.Table.Post
+import qualified Qwu.DB.Table.Post      as Post
+import           Qwu.DB.Table.Account
+import qualified Qwu.DB.Table.Account   as Account
+import           Qwu.DB.Util
 
 import           Data.ByteString    (ByteString)
 import           Data.Text.Encoding (encodeUtf8, decodeUtf8)

@@ -1,6 +1,6 @@
-module DB.Util where
+module Qwu.DB.Util where
 
-import DB.Connect
+import Qwu.DB.Connect
 
 import Crypto.PasswordStore (makePassword)
 import Data.Int (Int64)

@@ -1,10 +1,10 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Html.Post where
+module Qwu.Html.Post where
 
-import DB.Table.Post
-import Html.Base
+import Qwu.DB.Table.Post
+import Qwu.Html.Base
 
 import Data.Text (pack)
 import Lucid

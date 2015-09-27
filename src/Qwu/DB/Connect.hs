@@ -1,4 +1,4 @@
-module DB.Connect (pConnect) where
+module Qwu.DB.Connect (pConnect) where
 
 import Database.PostgreSQL.Simple
 

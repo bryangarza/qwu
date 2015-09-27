@@ -1,9 +1,9 @@
 {-# LANGUAGE OverloadedStrings #-}
-module DB.Test where
+module Qwu.DB.Test where
 
-import DB.Manipulation
-import DB.Table.Account
-import DB.Table.Post
+import Qwu.DB.Manipulation
+import Qwu.DB.Table.Account
+import Qwu.DB.Table.Post
 
 import Data.Default
 import Data.Text

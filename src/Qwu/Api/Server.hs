@@ -1,11 +1,11 @@
 {-# LANGUAGE DataKinds     #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Api.Server where
+module Qwu.Api.Server where
 
-import           DB.Query (runPostByAccountId)
-import qualified DB.Table.Post as P
-import           Html.Post
+import           Qwu.DB.Query (runPostByAccountId)
+import qualified Qwu.DB.Table.Post as P
+import           Qwu.Html.Post
 
 import Control.Monad.Trans        (liftIO)
 import Control.Monad.Trans.Either (EitherT)

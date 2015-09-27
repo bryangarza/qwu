@@ -4,9 +4,9 @@
 {-# LANGUAGE OverloadedStrings     #-}
 {-# LANGUAGE TemplateHaskell       #-}
 
-module DB.Table.Post where
+module Qwu.DB.Table.Post where
 
-import DB.Table.Account (AccountId)
+import Qwu.DB.Table.Account (AccountId)
 
 import GHC.Generics
 import Data.Aeson
