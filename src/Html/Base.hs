@@ -20,7 +20,4 @@ baseHtml body =
                   title_ "Qwu")
         body_ (div_ [class_ "container"]
                     (do h1_ "Qwu"
-                        t_ [class_ "posts"] body)))
-  where t_ :: Term a r
-           => a -> r
-        t_ = termWith "p" [class_ " t "]
+                        div_ [class_ "posts"] body)))
