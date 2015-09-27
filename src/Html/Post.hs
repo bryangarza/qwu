@@ -3,32 +3,27 @@
 
 module Html.Post where
 
-import DB.Table.Post hiding (id_) -- conflicts with Lucid
+import DB.Table.Post
 import DB.Table.Post as P
 import Html.Base
 
+import Data.Text(pack)
 import Lucid
 
 -- HTML serialization of a single post
 instance ToHtml Post where
   toHtml post =
-    tr_ $ do
-      td_ (toHtml . show $ P.id_ post)
-      td_ (toHtml $ body post)
-      td_ (toHtml . show $ ts post)
-      td_ (toHtml . show $ accountId post)
+    li_ $ do
+      div_ [class_ "post", id_ (pack . show $ postId post)] $ do
+        div_ [class_ "accountId"] (toHtml . show $ accountId post)
+        div_ [class_ "timestamp"] (toHtml . show $ ts post)
+        div_ [class_ "body"] (toHtml $ body post)
 
   toHtmlRaw = toHtml
 
 -- HTML serialization of a list of posts
 instance ToHtml [Post] where
-  toHtml posts = baseHtml . table_ $ do
-    tr_ $ do
-      th_ "id"
-      th_ "content"
-      th_ "timestamp"
-      th_ "account id"
-
+  toHtml posts = baseHtml . ul_ $ do
     foldMap toHtml posts
 
   toHtmlRaw = toHtml

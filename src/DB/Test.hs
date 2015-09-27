@@ -7,13 +7,12 @@ import Data.UUID as U
 
 import qualified DB.Table.Post as P
 import qualified DB.Table.Account as A
-import qualified DB.Table.Relationship as R
 import DB.Manipulation
 
 testCreatePost :: IO ()
 testCreatePost = createPost (def :: P.Post) U.nil
 
-testUpdatePostBody :: P.Id_ -> IO ()
+testUpdatePostBody :: P.PostId -> IO ()
 testUpdatePostBody = updatePostBody "updated"
 
 testUpdateAccountUsername :: IO ()

@@ -20,19 +20,19 @@ import Opaleye ( Column
                , PGText
                , PGUuid )
 
-type Id_      = UUID
-type Username = Text
-type Email    = Text
-type Password = Text
+type AccountId = UUID
+type Username  = Text
+type Email     = Text
+type Password  = Text
 
 data Account' a b c d = Account
-    { id_      :: a
-    , username :: b
-    , email    :: c
-    , password :: d
+    { accountId :: a
+    , username  :: b
+    , email     :: c
+    , password  :: d
     } deriving (Eq, Show, Generic)
 
-type Account = Account' Id_ Username Email Password
+type Account = Account' AccountId Username Email Password
 
 instance ToJSON Account
 
@@ -50,7 +50,7 @@ type ColumnR = Account' (Column PGUuid) (Column PGText) (Column PGText) (Column 
 
 table :: Table ColumnW ColumnR
 table = Table "accountTable" (
-  pAccount Account { id_      = required "accountId"
-                   , username = required "username"
-                   , email    = required "email"
-                   , password = required "password" })
+  pAccount Account { accountId = required "accountId"
+                   , username  = required "username"
+                   , email     = required "email"
+                   , password  = required "password" })

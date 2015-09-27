@@ -24,19 +24,19 @@ import Opaleye ( Column
                , PGTimestamptz
                , PGUuid )
 
-type Id_       = Int
+type PostId    = Int
 type Body      = Text
 type Ts        = Time.UTCTime
 type AccountId = UUID
 
 data Post' a b c d = Post
-    { id_       :: a
+    { postId    :: a
     , body      :: b
     , ts        :: c
     , accountId :: d
     } deriving (Eq, Show, Generic)
 
-type Post = Post' Id_ Body Ts AccountId
+type Post = Post' PostId Body Ts AccountId
 
 instance ToJSON Post
 
@@ -57,7 +57,7 @@ type ColumnR = Post'        (Column PGInt4)  (Column PGText) (Column PGTimestamp
 
 table :: Table ColumnW ColumnR
 table = Table "postTable" (
-  pPost Post { id_       = optional "postId"
+  pPost Post { postId    = optional "postId"
              , body      = required "body"
              , ts        = required "ts"
              , accountId = required "accountId" })
