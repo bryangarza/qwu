@@ -1,6 +1,7 @@
 module Main where
 
-import Server
+import Api.Server
+
 import Network.Wai
 import Network.Wai.Handler.Warp
 

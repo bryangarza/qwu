@@ -1,7 +1,7 @@
-{-# LANGUAGE DataKinds             #-}
-{-# LANGUAGE TypeOperators         #-}
+{-# LANGUAGE DataKinds     #-}
+{-# LANGUAGE TypeOperators #-}
 
-module Server where
+module Api.Server where
 
 import qualified DB.Query as Q
 import qualified DB.Table.Post as P
