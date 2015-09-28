@@ -7,11 +7,12 @@ import           Qwu.DB.Query (runPostByAccountId)
 import qualified Qwu.DB.Table.Post as P
 import           Qwu.Html.Post
 
-import Control.Monad.Trans        (liftIO)
-import Control.Monad.Trans.Either (EitherT)
-import Network.Wai                (Application)
+import Control.Monad.Trans                  (liftIO)
+import Control.Monad.Trans.Either           (EitherT)
+import Network.Wai                          (Application)
+import Network.Wai.Middleware.RequestLogger (logStdout)
 import Servant
-import Servant.HTML.Lucid         (HTML)
+import Servant.HTML.Lucid                   (HTML)
 
 type MyApi = "posts" :> Get '[JSON, HTML] [P.Post]
         -- takes Body type as JSON, returns [Post]
@@ -30,4 +31,4 @@ server = posts
     newpost x = liftIO runPostByAccountId
 
 app :: Application
-app = serve myApi server
+app = logStdout (serve myApi server)
