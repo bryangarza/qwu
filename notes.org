@@ -26,3 +26,7 @@ therefore we have ~IO [Int]~ as the return type.
 
 ~returned~ and ~haskells~ are constrained by the same typeclass, as they are
 representing the same exact 'thing' being returned.
+
+* Servant
+
+- [[https://github.com/haskell-servant/servant/issues/236][Example of writing instances of ~FromFormUrlEncoded~.]]

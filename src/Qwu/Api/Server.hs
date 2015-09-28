@@ -3,6 +3,7 @@
 
 module Qwu.Api.Server where
 
+import           Qwu.DB.Manipulation
 import           Qwu.DB.Query (runPostByAccountId)
 import qualified Qwu.DB.Table.Post as P
 import           Qwu.Html.Post
@@ -18,8 +19,8 @@ import Servant
 import Servant.HTML.Lucid                   (HTML)
 
 type MyApi = "posts" :> Get '[JSON, HTML] [P.Post]
-        -- takes Body type as JSON, returns [Post]
-        :<|> "newpost" :> ReqBody '[JSON] P.Body :> Post '[JSON, HTML] [P.Post]
+        -- Accept POST [(Text, Text)] (FormUrlEncoded), returns [Post] as JSON or HTML.
+        :<|> "newpost" :> ReqBody '[FormUrlEncoded] [(Text, Text)] :> Post '[JSON, HTML] [P.Post]
 
 myApi :: Proxy MyApi
 myApi = Proxy
@@ -30,8 +31,10 @@ server = posts
   where
     posts :: EitherT ServantErr IO [P.Post]
     posts = liftIO runPostByAccountId
-    newpost :: P.Body -> EitherT ServantErr IO [P.Post]
-    newpost x = liftIO runPostByAccountId
+    newpost :: [(Text, Text)] -> EitherT ServantErr IO [P.Post]
+    newpost [(_, fieldData)] = do
+      liftIO (createPost ((def :: P.Post) { P.body = fieldData }) U.nil)
+      liftIO runPostByAccountId
 
 app :: Application
 app = logStdoutDev (serve myApi server)
