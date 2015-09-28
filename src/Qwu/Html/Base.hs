@@ -2,10 +2,18 @@
 
 module Qwu.Html.Base where
 
+import Qwu.Html.NewPost
+
 import Control.Monad
 import Lucid
 
-baseHtml :: Monad m => HtmlT m a -> HtmlT m a
+container :: Monad m => HtmlT m () -> HtmlT m ()
+container body =
+  body_ (div_ [class_ "container"]
+         (do h1_ "Qwu"
+             div_ [class_ "posts"] body))
+
+baseHtml :: Monad m => HtmlT m () -> HtmlT m ()
 baseHtml body =
   doctypehtml_
     (do head_ (do meta_ [charset_ "utf-8"]
@@ -18,6 +26,5 @@ baseHtml body =
                         ,rel_ "stylesheet"
                         ,type_ "text/css"]
                   title_ "Qwu")
-        body_ (div_ [class_ "container"]
-                    (do h1_ "Qwu"
-                        div_ [class_ "posts"] body)))
+        body_ (do newPost
+                  container body))
