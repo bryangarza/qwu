@@ -9,8 +9,11 @@ import           Qwu.Html.Post
 
 import Control.Monad.Trans                  (liftIO)
 import Control.Monad.Trans.Either           (EitherT)
+import Data.Default
+import Data.UUID as U
+import Data.Text (Text)
 import Network.Wai                          (Application)
-import Network.Wai.Middleware.RequestLogger (logStdout)
+import Network.Wai.Middleware.RequestLogger (logStdoutDev)
 import Servant
 import Servant.HTML.Lucid                   (HTML)
 
@@ -31,4 +34,4 @@ server = posts
     newpost x = liftIO runPostByAccountId
 
 app :: Application
-app = logStdout (serve myApi server)
+app = logStdoutDev (serve myApi server)
