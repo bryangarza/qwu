@@ -1,5 +1,3 @@
-{-# LANGUAGE NamedFieldPuns #-}
-
 module Qwu.DB.Manipulation (
     createPost
   , createAccount
@@ -34,12 +32,12 @@ import Opaleye.PGTypes
   , pgUTCTime )
 
 createPost :: Post -> AccountId -> IO ()
-createPost Post {_body} accountId =
+createPost p accountId =
   do
     timestamp <- getCurrentTime
     runWithConn runInsert Post.table (columns timestamp)
   where
-    body'      = pgStrictText _body
+    body'      = pgStrictText (view body p)
     accountId' = pgUUID accountId
     columns t  = Post Nothing body' (pgUTCTime t) accountId'
 
