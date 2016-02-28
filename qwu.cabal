@@ -31,6 +31,7 @@ library
                      , bytestring
                      , data-default
                      , either
+                     , lens
                      , lucid
                      , mtl
                      , opaleye
@@ -58,6 +59,7 @@ executable qwu
                      , bytestring
                      , data-default
                      , either
+                     , lens
                      , lucid
                      , mtl
                      , opaleye

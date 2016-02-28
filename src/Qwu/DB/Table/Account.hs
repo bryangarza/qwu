@@ -7,6 +7,7 @@
 module Qwu.DB.Table.Account where
 
 import GHC.Generics
+import Control.Lens (makeLenses)
 import Data.Aeson
 import Data.Default
 import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
@@ -27,11 +28,13 @@ type Email     = Text
 type Password  = Text
 
 data Account' a b c d = Account
-    { accountId :: a
-    , username  :: b
-    , email     :: c
-    , password  :: d
+    { _accountId :: a
+    , _username  :: b
+    , _email     :: c
+    , _password  :: d
     } deriving (Eq, Show, Generic)
+
+makeLenses ''Account'
 
 type Account = Account' AccountId Username Email Password
 
@@ -51,7 +54,7 @@ type ColumnR = Account' (Column PGUuid) (Column PGText) (Column PGText) (Column 
 
 table :: Table ColumnW ColumnR
 table = Table "accountTable" (
-  pAccount Account { accountId = required "accountId"
-                   , username  = required "username"
-                   , email     = required "email"
-                   , password  = required "password" })
+  pAccount Account { _accountId = required "accountId"
+                   , _username  = required "username"
+                   , _email     = required "email"
+                   , _password  = required "password" })

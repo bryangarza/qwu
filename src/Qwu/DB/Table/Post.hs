@@ -9,6 +9,7 @@ module Qwu.DB.Table.Post where
 import Qwu.DB.Table.Account (AccountId)
 
 import GHC.Generics
+import Control.Lens (makeLenses)
 import Data.Aeson
 import Data.Default
 import Data.Profunctor.Product.TH (makeAdaptorAndInstance)
@@ -31,11 +32,13 @@ type Body      = Text
 type Ts        = UTCTime
 
 data Post' a b c d = Post
-    { postId    :: a
-    , body      :: b
-    , ts        :: c
-    , accountId :: d
+    { _postId    :: a
+    , _body      :: b
+    , _ts        :: c
+    , _accountId :: d
     } deriving (Eq, Show, Generic)
+
+makeLenses ''Post'
 
 type Post = Post' PostId Body Ts AccountId
 
@@ -58,7 +61,7 @@ type ColumnR = Post'        (Column PGInt4)  (Column PGText) (Column PGTimestamp
 
 table :: Table ColumnW ColumnR
 table = Table "postTable" (
-  pPost Post { postId    = optional "postId"
-             , body      = required "body"
-             , ts        = required "ts"
-             , accountId = required "accountId" })
+  pPost Post { _postId    = optional "postId"
+             , _body      = required "body"
+             , _ts        = required "ts"
+             , _accountId = required "accountId" })

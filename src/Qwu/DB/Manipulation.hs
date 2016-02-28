@@ -17,6 +17,7 @@ import           Qwu.DB.Table.Account
 import qualified Qwu.DB.Table.Account   as Account
 import           Qwu.DB.Util
 
+import           Control.Lens       (set, view)
 import           Data.ByteString    (ByteString)
 import           Data.Text.Encoding (encodeUtf8, decodeUtf8)
 import           Data.Time.Clock    (getCurrentTime)
@@ -33,27 +34,30 @@ import Opaleye.PGTypes
   , pgUTCTime )
 
 createPost :: Post -> AccountId -> IO ()
-createPost Post {body} accountId =
+createPost Post {_body} accountId =
   do
     timestamp <- getCurrentTime
     runWithConn runInsert Post.table (columns timestamp)
   where
-    body'                  = pgStrictText body
-    accountId'             = pgUUID accountId
-    columns t              = Post Nothing body' (pgUTCTime t) accountId'
+    body'      = pgStrictText _body
+    accountId' = pgUUID accountId
+    columns t  = Post Nothing body' (pgUTCTime t) accountId'
 
 updatePostField :: (Post.ColumnW -> Post.ColumnW) -> PostId -> IO ()
 updatePostField update idToMatch =
   runWithConn3 runUpdate Post.table update' match
   where
-    update' x@Post {postId} = update (x { postId = Just postId })
-    match Post {postId} = postId .== pgInt4 idToMatch
+    idToMatch' = pgInt4 idToMatch
+    update' = update . set postId (Just idToMatch')
+    match = (.== idToMatch') . view postId
 
 updatePostBody :: Body -> PostId -> IO ()
-updatePostBody newBody = updatePostField update
+updatePostBody = updatePostField . set body . pgStrictText
+
+deletePost :: PostId -> IO ()
+deletePost idToMatch = runWithConn runDelete Post.table match
   where
-    newBody' = pgStrictText newBody
-    update x = x { body = newBody' }
+    match = (.== pgInt4 idToMatch) . view postId
 
 createAccount :: Account -> IO ()
 createAccount (Account accountId username email password) =
@@ -72,18 +76,13 @@ updateAccountField :: (Account.ColumnR -> Account.ColumnW) -> AccountId -> IO ()
 updateAccountField update idToMatch =
   runWithConn3 runUpdate Account.table update match
   where
-    match Account {Account.accountId} = accountId .== pgUUID idToMatch
+    match = (.== pgUUID idToMatch) . view Account.accountId
 
 updateAccountUsername :: Username -> AccountId -> IO ()
-updateAccountUsername newUsername = updateAccountField update
-  where newUsername' = pgStrictText newUsername
-        update x = x { username = newUsername' }
+updateAccountUsername = updateAccountField . set username . pgStrictText
 
 updateAccountEmail :: Email -> AccountId -> IO ()
-updateAccountEmail newEmail = updateAccountField update
-  where
-    newEmail' = pgStrictText newEmail
-    update x = x { email = newEmail' }
+updateAccountEmail = updateAccountField . set email . pgStrictText
 
 updateAccountPassword :: Password -> AccountId -> IO ()
 updateAccountPassword newPassword accountId =
@@ -92,15 +91,9 @@ updateAccountPassword newPassword accountId =
     updateAccountField (update hash) accountId
   where
     update :: ByteString -> Account.ColumnR -> Account.ColumnW
-    update hash x = x { password = hash' }
-      where hash' = pgStrictText (decodeUtf8 hash)
-
-deletePost :: PostId -> IO ()
-deletePost idToMatch = runWithConn runDelete Post.table match
-  where
-    match Post {postId} = postId .== pgInt4 idToMatch
+    update = set password . pgStrictText . decodeUtf8
 
 deleteAccount :: AccountId -> IO ()
 deleteAccount idToMatch = runWithConn runDelete Account.table match
   where
-    match Account {Account.accountId} = accountId .== pgUUID idToMatch
+    match = (.== pgUUID idToMatch) . view Account.accountId
