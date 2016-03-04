@@ -9,8 +9,8 @@ import Qwu.DB.Table.Post
 
 import qualified Data.UUID as U
 import Data.UUID
-import Control.Lens                    (view)
 import Control.Arrow                   (returnA)
+import Control.Lens                    (view)
 import Data.Profunctor.Product.Default (Default)
 import Database.PostgreSQL.Simple      (Connection)
 import Opaleye.PGTypes                 (pgUUID)
